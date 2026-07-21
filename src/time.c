@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/21 22:31:59 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/21 22:50:56 by josjimen         ###   ########.fr       */
+/*   Created: 2026/07/21 22:31:49 by josjimen          #+#    #+#             */
+/*   Updated: 2026/07/21 22:46:11 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-#include <stdio.h>
+#include <sys/time.h>
+#include <stddef.h>
 
-int	main(int argc, char **argv)
+long	get_time_ms(void)
 {
-	t_config	config;
+	struct timeval	time;
+	long			result_t;
 
-	if (parser(argc, argv, &config) == 1)
-		return (1);
-	return (0);
+	if (gettimeofday(&time, NULL) == -1)
+		return (-1);
+	result_t = (
+			time.tv_sec * 1000 + time.tv_usec / 1000
+			);
+	return (result_t);
 }

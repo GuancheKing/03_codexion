@@ -6,7 +6,7 @@
 #    By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 18:25:14 by josjimen          #+#    #+#              #
-#    Updated: 2026/07/21 18:43:10 by josjimen         ###   ########.fr        #
+#    Updated: 2026/07/21 22:45:48 by josjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 INCLUDES = -Iinclude
 
 SRCS =	src/main.c \
-		src/parser.c
+		src/parser.c \
+		src/time.c
 
 OBJS = $(SRCS:.c=.o)
 
