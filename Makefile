@@ -6,7 +6,7 @@
 #    By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 18:25:14 by josjimen          #+#    #+#              #
-#    Updated: 2026/07/22 09:27:07 by josjimen         ###   ########.fr        #
+#    Updated: 2026/07/22 11:49:05 by josjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ SRCS =	src/main.c \
 		src/parser.c \
 		src/time.c \
 		src/init.c \
-		src/destroy.c
+		src/destroy.c \
+		src/routine.c \
+		src/threads.c
 
 OBJS = $(SRCS:.c=.o)
 

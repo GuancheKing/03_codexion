@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/21 22:31:59 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 14:33:44 by josjimen         ###   ########.fr       */
+/*   Created: 2026/07/22 11:39:20 by josjimen          #+#    #+#             */
+/*   Updated: 2026/07/22 14:21:18 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 #include <stdio.h>
 
-int	main(int argc, char **argv)
+void	*coder_routine(void *arg)
 {
-	t_simulation	simulation;
+	t_coder	*coder;
 
-	if (init_simulation(argc, argv, &simulation) == 1)
-		return (1);
-	if (start_threads(&simulation) == 1)
-	{
-		join_threads(&simulation);
-		destroy_simulation(&simulation);
-		return (1);
-	}
-	if (join_threads(&simulation) == 1)
-	{
-		destroy_simulation(&simulation);
-		return (1);
-	}
-	destroy_simulation(&simulation);
-	return (0);
+	coder = (t_coder *)arg;
+	printf("coder %d started\n", coder->id);
+	return (NULL);
 }
