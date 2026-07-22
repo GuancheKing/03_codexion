@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/21 22:31:59 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 10:05:33 by josjimen         ###   ########.fr       */
+/*   Created: 2026/07/22 09:25:28 by josjimen          #+#    #+#             */
+/*   Updated: 2026/07/22 10:12:58 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-#include <stdio.h>
+#include <stdlib.h>
 
-int	main(int argc, char **argv)
+void	destroy_simulation(t_simulation *simulation)
 {
-	t_simulation	simulation;
-
-	if (init_simulation(argc, argv, &simulation) == 1)
-		return (1);
-	destroy_simulation(&simulation);
-	return (0);
+	pthread_mutex_destroy(&simulation->finish_mutex);
+	free(simulation->coders);
+	simulation->coders = NULL;
 }
