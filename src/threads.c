@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 11:48:33 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 14:35:49 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/22 18:32:24 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,26 @@ int	start_threads(t_simulation *simulation)
 int	join_threads(t_simulation *simulation)
 {
 	int	i;
+	int	error;
 
 	i = 0;
+	error = 0;
 	while (i < simulation->created_threads)
 	{
 		if (pthread_join(simulation->coders[i].thread, NULL) != 0)
-			return (1);
+			error = 1;
 		i++;
 	}
-	return (0);
+	return (error);
+}
+
+void	cancel_start(t_simulation *simulation)
+{
+	pthread_mutex_lock(&simulation->finish_mutex);
+	simulation->simulation_finished = true;
+	pthread_mutex_unlock(&simulation->finish_mutex);
+	pthread_mutex_lock(&simulation->start_mutex);
+	simulation->start_ready = true;
+	pthread_cond_broadcast(&simulation->start_condition);
+	pthread_mutex_unlock(&simulation->start_mutex);
 }

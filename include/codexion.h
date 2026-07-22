@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 14:26:25 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/22 18:34:02 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ struct s_simulation
 {
 	t_config		config;
 	long			simulation_start;
+	bool			start_ready;
+	pthread_mutex_t	start_mutex;
+	pthread_cond_t	start_condition;
 	bool			simulation_finished;
 	pthread_mutex_t	finish_mutex;
 	int				created_threads;
@@ -63,5 +66,7 @@ void	init_coders(t_simulation *simulation);
 void	*coder_routine(void *arg);
 int		start_threads(t_simulation *simulation);
 int		join_threads(t_simulation *simulation);
+int		start_simulation(t_simulation *simulation);
+void	cancel_start(t_simulation *simulation);
 
 #endif
