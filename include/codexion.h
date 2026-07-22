@@ -6,20 +6,22 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/21 22:47:54 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/22 07:17:12 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
-typedef	enum
+# include <stdbool.h>
+
+typedef enum e_scheduler
 {
 	SCHEDULER_FIFO,
 	SCHEDULER_EDF
-} t_scheduler;
+}	t_scheduler;
 
-typedef struct
+typedef struct s_config
 {
 	int			number_of_coders;
 	long		time_to_burnout;
@@ -29,9 +31,17 @@ typedef struct
 	int			number_of_compiles_required;
 	long		dongle_cooldown;
 	t_scheduler	scheduler;
-} t_config;
+}	t_config;
+
+typedef struct s_simulation
+{
+	t_config	config;
+	long		simulation_start;
+	bool		simulation_finished;
+}	t_simulation;
 
 int		parser(int argc, char **argv, t_config *config);
 long	get_time_ms(void);
+int		init_simulation(int argc, char **argv, t_simulation *simulation);
 
 #endif
