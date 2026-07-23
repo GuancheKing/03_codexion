@@ -6,21 +6,11 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 11:39:20 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 18:33:01 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/23 09:55:14 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-static bool	is_simulation_finished(t_simulation *simulation)
-{
-	bool	finished;
-
-	pthread_mutex_lock(&simulation->finish_mutex);
-	finished = simulation->simulation_finished;
-	pthread_mutex_unlock(&simulation->finish_mutex);
-	return (finished);
-}
 
 void	*coder_routine(void *arg)
 {

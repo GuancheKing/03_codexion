@@ -6,14 +6,14 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 06:55:36 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 18:17:39 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/23 10:40:30 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 #include <stdlib.h>
 
-void	init_coders(t_simulation *simulation)
+static void	init_coders(t_simulation *simulation)
 {
 	int	i;
 
@@ -68,9 +68,9 @@ int	start_simulation(t_simulation *simulation)
 	simulation->simulation_start = get_time_ms();
 	if (simulation->simulation_start == -1)
 	{
-		pthread_mutex_lock(&simulation->finish_mutex);
-		simulation->simulation_finished = true;
-		pthread_mutex_unlock(&simulation->finish_mutex);
+		pthread_mutex_unlock(&simulation->start_mutex);
+		set_simulation_finished(simulation);
+		pthread_mutex_lock(&simulation->start_mutex);
 		simulation->start_ready = true;
 		pthread_cond_broadcast(&simulation->start_condition);
 		pthread_mutex_unlock(&simulation->start_mutex);

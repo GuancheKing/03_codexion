@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 11:48:33 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/22 18:32:24 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/23 10:26:54 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	join_threads(t_simulation *simulation)
 
 void	cancel_start(t_simulation *simulation)
 {
-	pthread_mutex_lock(&simulation->finish_mutex);
-	simulation->simulation_finished = true;
-	pthread_mutex_unlock(&simulation->finish_mutex);
+	set_simulation_finished(simulation);
 	pthread_mutex_lock(&simulation->start_mutex);
 	simulation->start_ready = true;
 	pthread_cond_broadcast(&simulation->start_condition);
