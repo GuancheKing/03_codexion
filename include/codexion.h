@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/23 15:12:56 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/24 17:08:13 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ typedef struct s_config
 }	t_config;
 
 typedef struct s_simulation	t_simulation;
+typedef struct s_coder		t_coder;
+
+typedef struct s_request
+{
+	t_coder		*coder;
+	long		arrival_order;
+	long		deadline;
+}	t_request;
+
+typedef struct s_request_queue
+{
+	t_request		*items;
+	int				size;
+	int				capacity;
+	long			next_arrival_order;
+	pthread_mutex_t	queue_mutex;
+	pthread_cond_t	queue_cond;
+}	t_request_queue;
 
 typedef struct s_dongle
 {
@@ -44,7 +62,7 @@ typedef struct s_dongle
 	pthread_mutex_t	dongle_mutex;
 }	t_dongle;
 
-typedef struct s_coder
+struct s_coder
 {
 	int				id;
 	int				completed_compiles;
@@ -53,7 +71,7 @@ typedef struct s_coder
 	t_simulation	*simulation;
 	t_dongle		*left_dongle;
 	t_dongle		*right_dongle;
-}	t_coder;
+};
 
 struct s_simulation
 {
@@ -67,6 +85,7 @@ struct s_simulation
 	int				created_threads;
 	t_coder			*coders;
 	t_dongle		*dongles;
+	t_request_queue	queue;
 };
 
 int		parser(int argc, char **argv, t_config *config);
@@ -83,5 +102,7 @@ void	set_simulation_finished(t_simulation *simulation);
 int		wait_ms(t_simulation *simulation, long duration);
 int		init_dongles(t_simulation *simulation);
 void	assign_dongles(t_simulation *simulation);
+bool	request_has_priority(t_request *a, t_request *b, t_scheduler scheduler);
+int		init_request_queue(t_simulation *simulation);
 
 #endif

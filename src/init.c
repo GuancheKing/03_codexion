@@ -6,13 +6,12 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 06:55:36 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/24 09:47:32 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/24 17:13:47 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 static void	init_coders(t_simulation *simulation)
 {
@@ -96,6 +95,9 @@ int	init_simulation(int argc, char **argv, t_simulation *simulation)
 	simulation->start_ready = false;
 	simulation->simulation_finished = false;
 	simulation->created_threads = 0;
+	simulation->coders = NULL;
+	simulation->dongles = NULL;
+	simulation->queue.items = NULL;
 	if (init_sync(simulation) == 1)
 		return (1);
 	if (allocate_coders(simulation) == 1)
@@ -107,5 +109,10 @@ int	init_simulation(int argc, char **argv, t_simulation *simulation)
 		return (1);
 	}
 	assign_dongles(simulation);
+	if (init_request_queue(simulation) == 1)
+	{
+		destroy_simulation(simulation);
+		return (1);
+	}
 	return (0);
 }
