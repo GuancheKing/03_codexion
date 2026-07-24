@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/23 10:43:17 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/23 15:12:56 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ typedef struct s_config
 
 typedef struct s_simulation	t_simulation;
 
+typedef struct s_dongle
+{
+	int				id;
+	long			available_at;
+	bool			in_use;
+	pthread_mutex_t	dongle_mutex;
+}	t_dongle;
+
 typedef struct s_coder
 {
 	int				id;
@@ -43,6 +51,8 @@ typedef struct s_coder
 	long			last_compile_time;
 	pthread_t		thread;
 	t_simulation	*simulation;
+	t_dongle		*left_dongle;
+	t_dongle		*right_dongle;
 }	t_coder;
 
 struct s_simulation
@@ -56,6 +66,7 @@ struct s_simulation
 	pthread_mutex_t	finish_mutex;
 	int				created_threads;
 	t_coder			*coders;
+	t_dongle		*dongles;
 };
 
 int		parser(int argc, char **argv, t_config *config);
@@ -70,5 +81,7 @@ void	cancel_start(t_simulation *simulation);
 bool	is_simulation_finished(t_simulation *simulation);
 void	set_simulation_finished(t_simulation *simulation);
 int		wait_ms(t_simulation *simulation, long duration);
+int		init_dongles(t_simulation *simulation);
+void	assign_dongles(t_simulation *simulation);
 
 #endif

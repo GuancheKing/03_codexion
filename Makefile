@@ -6,7 +6,7 @@
 #    By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 18:25:14 by josjimen          #+#    #+#              #
-#    Updated: 2026/07/23 09:55:45 by josjimen         ###   ########.fr        #
+#    Updated: 2026/07/23 15:13:14 by josjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS =	src/main.c \
 		src/destroy.c \
 		src/routine.c \
 		src/threads.c \
-		src/state.c
+		src/state.c \
+		src/dongle_init.c
 
 OBJS = $(SRCS:.c=.o)
 
