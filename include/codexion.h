@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/24 17:08:13 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/07/30 15:05:26 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,20 @@ int		init_dongles(t_simulation *simulation);
 void	assign_dongles(t_simulation *simulation);
 bool	request_has_priority(t_request *a, t_request *b, t_scheduler scheduler);
 int		init_request_queue(t_simulation *simulation);
+void	swap_requests(t_request *a, t_request *b);
+int		parent_index(int i);
+int		left_child_index(int i);
+int		right_child_index(int i);
+int		push_request(
+			t_request_queue *queue,
+			t_request request,
+			t_scheduler scheduler
+		);
+int		pop_request(
+			t_request_queue *queue,
+			t_request *result,
+			t_scheduler scheduler
+		);
+
 
 #endif

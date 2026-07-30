@@ -6,7 +6,7 @@
 #    By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 18:25:14 by josjimen          #+#    #+#              #
-#    Updated: 2026/07/24 10:51:38 by josjimen         ###   ########.fr        #
+#    Updated: 2026/07/30 15:13:48 by josjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRCS =	src/main.c \
 		src/state.c \
 		src/dongle_init.c \
 		src/request_priority.c \
-		src/request_queue_init.c
+		src/request_queue_init.c \
+		src/request_heap.c \
+		src/request_heap_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
