@@ -118,6 +118,8 @@ int		pop_request(
 			t_request *result,
 			t_scheduler scheduler
 		);
+int		enqueue_coder_request(t_coder *coder);
+bool	try_reserve_dongles(t_coder *coder, long current_time);
 
 
 #endif
