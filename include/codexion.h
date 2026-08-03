@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/03 20:12:17 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/03 23:07:55 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,10 @@ bool	coder_is_queue_head(t_request_queue *queue, t_coder *coder);
 int		log_state(t_coder *coder, t_log_state state);
 void	init_default_values(t_simulation *simulation);
 int		init_resources(t_simulation *simulation);
+void	set_last_compile_time(t_coder *coder, long compile_time);
+void	increment_completed_compiles(t_coder *coder);
+int		get_completed_compiles(t_coder *coder);
+long	get_last_compile_time(t_coder *coder);
+bool	has_completed_required_compiles(t_coder *coder);
 
 #endif
