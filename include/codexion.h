@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/30 15:05:26 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/03 12:44:25 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,20 @@
 
 # include <pthread.h>
 # include <stdbool.h>
+# include <stdio.h>
 
 typedef enum e_scheduler
 {
 	SCHEDULER_FIFO,
 	SCHEDULER_EDF
 }	t_scheduler;
+
+typedef enum e_claim_result
+{
+	CLAIM_ERROR,
+	CLAIM_WAIT,
+	CLAIM_SUCCESS
+}	t_claim_result;
 
 typedef struct s_config
 {
@@ -112,14 +120,23 @@ int		push_request(
 			t_request_queue *queue,
 			t_request request,
 			t_scheduler scheduler
-		);
+			);
 int		pop_request(
 			t_request_queue *queue,
 			t_request *result,
 			t_scheduler scheduler
-		);
+			);
 int		enqueue_coder_request(t_coder *coder);
 bool	try_reserve_dongles(t_coder *coder, long current_time);
-
+void	release_dongles(t_coder *coder, long release_time);
+int		wait_for_dongles(t_coder *coder);
+void	cancel_dongle_reservation(t_coder *coder);
+void	get_coder_dongles_wait_info(
+			t_coder *coder,
+			bool *has_busy_dongle,
+			long *available_at
+			);
+int		stop_dongle_wait(t_simulation *simulation);
+bool	coder_is_queue_head(t_request_queue *queue, t_coder *coder);
 
 #endif

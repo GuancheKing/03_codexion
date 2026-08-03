@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 12:47:17 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/21 12:56:35 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/03 13:09:12 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	parse_nmbr(char **argv, t_config *config)
 			return (1);
 		if (ft_custom_atol(argv[i + 1], &values[i]) == 1)
 			return (1);
-		if (values[i] <= 0)
+		if (values[i] <= 0 && i != 6)
 			return (1);
 		i++;
 	}
