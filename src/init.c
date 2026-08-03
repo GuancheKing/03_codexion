@@ -6,27 +6,11 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 06:55:36 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/03 13:05:34 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/03 20:11:41 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-#include <stdlib.h>
-
-static void	init_coders(t_simulation *simulation)
-{
-	int	i;
-
-	i = 0;
-	while (i < simulation->config.number_of_coders)
-	{
-		simulation->coders[i].id = i + 1;
-		simulation->coders[i].completed_compiles = 0;
-		simulation->coders[i].last_compile_time = 0;
-		simulation->coders[i].simulation = simulation;
-		i++;
-	}
-}
 
 static int	init_sync(t_simulation *simulation)
 {
@@ -43,17 +27,11 @@ static int	init_sync(t_simulation *simulation)
 		pthread_mutex_destroy(&simulation->start_mutex);
 		return (1);
 	}
-	return (0);
-}
-
-static int	allocate_coders(t_simulation *simulation)
-{
-	simulation->coders = malloc(
-			simulation->config.number_of_coders
-			* sizeof(*simulation->coders));
-	if (simulation->coders == NULL)
+	if (pthread_mutex_init(&simulation->log_mutex, NULL) != 0)
 	{
-		destroy_simulation(simulation);
+		pthread_mutex_destroy(&simulation->finish_mutex);
+		pthread_cond_destroy(&simulation->start_condition);
+		pthread_mutex_destroy(&simulation->start_mutex);
 		return (1);
 	}
 	return (0);
@@ -92,27 +70,10 @@ int	init_simulation(int argc, char **argv, t_simulation *simulation)
 {
 	if (parser(argc, argv, &simulation->config) == 1)
 		return (1);
-	simulation->start_ready = false;
-	simulation->simulation_finished = false;
-	simulation->created_threads = 0;
-	simulation->coders = NULL;
-	simulation->dongles = NULL;
-	simulation->queue.items = NULL;
+	init_default_values(simulation);
 	if (init_sync(simulation) == 1)
 		return (1);
-	if (allocate_coders(simulation) == 1)
+	if (init_resources(simulation) == 1)
 		return (1);
-	init_coders(simulation);
-	if (init_dongles(simulation) == 1)
-	{
-		destroy_simulation(simulation);
-		return (1);
-	}
-	assign_dongles(simulation);
-	if (init_request_queue(simulation) == 1)
-	{
-		destroy_simulation(simulation);
-		return (1);
-	}
 	return (0);
 }

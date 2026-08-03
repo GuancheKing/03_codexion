@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 09:25:28 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/24 17:12:40 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/03 18:18:22 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,31 @@ static void	destroy_dongles(t_simulation *simulation)
 	simulation->dongles = NULL;
 }
 
+static void	destroy_coders(t_simulation *simulation)
+{
+	int	i;
+
+	if (simulation->coders == NULL)
+		return ;
+	i = 0;
+	while (i < simulation->config.number_of_coders)
+	{
+		pthread_mutex_destroy(&simulation->coders[i].state_mutex);
+		i++;
+	}
+	free(simulation->coders);
+	simulation->coders = NULL;
+}
+
 void	destroy_simulation(t_simulation *simulation)
 {
 	if (simulation->queue.items != NULL)
 		destroy_queue(simulation);
 	if (simulation->dongles != NULL)
 		destroy_dongles(simulation);
-	free(simulation->coders);
-	simulation->coders = NULL;
+	if (simulation->coders != NULL)
+		destroy_coders(simulation);
+	pthread_mutex_destroy(&simulation->log_mutex);
 	pthread_mutex_destroy(&simulation->finish_mutex);
 	pthread_cond_destroy(&simulation->start_condition);
 	pthread_mutex_destroy(&simulation->start_mutex);

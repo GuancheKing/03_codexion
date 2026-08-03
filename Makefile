@@ -6,7 +6,7 @@
 #    By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 18:25:14 by josjimen          #+#    #+#              #
-#    Updated: 2026/08/03 12:32:06 by josjimen         ###   ########.fr        #
+#    Updated: 2026/08/03 20:11:41 by josjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SRCS =	src/main.c \
 		src/request_heap_utils.c \
 		src/request_queue.c \
 		src/dongle_access.c \
-		src/request_wait.c
+		src/request_wait.c \
+		src/log.c \
+		src/init_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/03 12:44:25 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/03 20:11:42 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ typedef enum e_claim_result
 	CLAIM_WAIT,
 	CLAIM_SUCCESS
 }	t_claim_result;
+
+typedef enum e_log_state
+{
+	LOG_DONGLE,
+	LOG_COMPILING,
+	LOG_DEBUGGING,
+	LOG_REFACTORING,
+	LOG_BURNOUT
+}	t_log_state;
 
 typedef struct s_config
 {
@@ -79,6 +88,7 @@ struct s_coder
 	t_simulation	*simulation;
 	t_dongle		*left_dongle;
 	t_dongle		*right_dongle;
+	pthread_mutex_t	state_mutex;
 };
 
 struct s_simulation
@@ -90,6 +100,7 @@ struct s_simulation
 	pthread_cond_t	start_condition;
 	bool			simulation_finished;
 	pthread_mutex_t	finish_mutex;
+	pthread_mutex_t	log_mutex;
 	int				created_threads;
 	t_coder			*coders;
 	t_dongle		*dongles;
@@ -138,5 +149,8 @@ void	get_coder_dongles_wait_info(
 			);
 int		stop_dongle_wait(t_simulation *simulation);
 bool	coder_is_queue_head(t_request_queue *queue, t_coder *coder);
+int		log_state(t_coder *coder, t_log_state state);
+void	init_default_values(t_simulation *simulation);
+int		init_resources(t_simulation *simulation);
 
 #endif
