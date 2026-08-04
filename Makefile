@@ -33,7 +33,8 @@ SRCS =	src/main.c \
 		src/request_wait.c \
 		src/log.c \
 		src/init_utils.c \
-		src/coder_state.c
+		src/coder_state.c \
+		src/coder_cycle.c
 
 OBJS = $(SRCS:.c=.o)
 
