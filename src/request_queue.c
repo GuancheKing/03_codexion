@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/30 16:18:39 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/03 12:45:24 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/05 22:45:08 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	enqueue_coder_request(t_coder *coder)
 	request.coder = coder;
 	request.arrival_order = simulation->queue.next_arrival_order;
 	request.deadline
-		= coder->last_compile_time + simulation->config.time_to_burnout;
+		= get_last_compile_time(coder) + simulation->config.time_to_burnout;
 	if (push_request(
 			&simulation->queue,
 			request,
