@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/04 06:52:28 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/05 10:48:30 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ struct s_simulation
 	t_coder			*coders;
 	t_dongle		*dongles;
 	t_request_queue	queue;
+	pthread_t		monitor;
+	bool			monitor_created;
 };
 
 int		parser(int argc, char **argv, t_config *config);
@@ -158,5 +160,9 @@ int		get_completed_compiles(t_coder *coder);
 long	get_last_compile_time(t_coder *coder);
 bool	has_completed_required_compiles(t_coder *coder);
 int		run_coder_cycle(t_coder *coder);
+void	*coder_routine(void *arg);
+bool	has_any_coder_burned_out(t_simulation *simulation, long current_time);
+bool	have_all_coders_completed(t_simulation *simulation);
+void	*monitor_routine(void *arg);
 
 #endif

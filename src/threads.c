@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 11:48:33 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/23 10:26:54 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/05 11:16:40 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ int	start_threads(t_simulation *simulation)
 		simulation->created_threads++;
 		i++;
 	}
+	if (pthread_create(&simulation->monitor, NULL,
+		monitor_routine, simulation) != 0)
+		return (1);
+	simulation->monitor_created = true;
 	return (0);
 }
 
@@ -40,6 +44,11 @@ int	join_threads(t_simulation *simulation)
 		if (pthread_join(simulation->coders[i].thread, NULL) != 0)
 			error = 1;
 		i++;
+	}
+	if (simulation->monitor_created == true)
+	{
+		if (pthread_join(simulation->monitor, NULL) != 0)
+			error = 1;
 	}
 	return (error);
 }

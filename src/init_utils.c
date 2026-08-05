@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 19:55:55 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/03 20:12:16 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/05 09:42:23 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_default_values(t_simulation *simulation)
 	simulation->coders = NULL;
 	simulation->dongles = NULL;
 	simulation->queue.items = NULL;
+	simulation->monitor_created = false;
 }
 
 static int	init_coders(t_simulation *simulation)

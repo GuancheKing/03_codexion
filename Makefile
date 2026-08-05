@@ -6,7 +6,7 @@
 #    By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 18:25:14 by josjimen          #+#    #+#              #
-#    Updated: 2026/08/03 22:51:37 by josjimen         ###   ########.fr        #
+#    Updated: 2026/08/05 10:12:17 by josjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS =	src/main.c \
 		src/log.c \
 		src/init_utils.c \
 		src/coder_state.c \
-		src/coder_cycle.c
+		src/coder_cycle.c \
+		src/monitor_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
