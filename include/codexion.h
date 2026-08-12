@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/05 10:48:30 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/12 12:28:50 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,10 @@ void	*coder_routine(void *arg);
 bool	has_any_coder_burned_out(t_simulation *simulation, long current_time);
 bool	have_all_coders_completed(t_simulation *simulation);
 void	*monitor_routine(void *arg);
+bool	request_has_dongle_priority(
+			t_request_queue *queue,
+			t_coder *coder,
+			t_scheduler scheduler
+			);
 
 #endif

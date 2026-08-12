@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 05:47:29 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/30 14:54:14 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/12 15:34:38 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,34 @@ int	pop_request(
 		queue->items[0] = queue->items[queue->size];
 		heapify_down(queue, 0, scheduler);
 	}
+	return (0);
+}
+
+int	remove_coder_request(
+	t_request_queue *queue, t_coder *coder, t_scheduler scheduler
+)
+{
+	int	index;
+	int	parent;
+
+	index = find_coder_request_index(queue, coder);
+	if (index == -1)
+		return (1);
+	queue->size--;
+	if (index == queue->size)
+		return (0);
+	queue->items[index] = queue->items[queue->size];
+	if (index > 0)
+	{
+		parent = parent_index(index);
+		if (request_has_priority(
+				&queue->items[index], &queue->items[parent], scheduler
+			))
+			heapify_up(queue, index, scheduler);
+		else
+			heapify_down(queue, index, scheduler);
+	}
+	if (index == 0)
+		heapify_down(queue, index, scheduler);
 	return (0);
 }
