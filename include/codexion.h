@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/12 12:28:50 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 09:23:21 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,12 @@ bool	request_has_dongle_priority(
 			t_coder *coder,
 			t_scheduler scheduler
 			);
+int		remove_coder_request(
+			t_request_queue *queue,
+			t_coder *coder,
+			t_scheduler scheduler
+			);
+int		find_coder_request_index(t_request_queue *queue, t_coder *coder);
+int		handle_request_turn(t_coder *coder, int *wait_result);
 
 #endif

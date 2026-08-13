@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 07:15:13 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/12 14:39:48 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 15:07:30 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,28 @@ static t_request	*find_coder_request(t_request_queue *queue, t_coder *coder)
 
 static bool	other_request_has_priority(
 	t_request *my_request, t_request *other_request,
-	t_scheduler scheduler
+	t_scheduler scheduler, long current_time
 )
 {
+	bool	has_busy_dongle;
+	long	available_at;
+
 	if (my_request->coder == other_request->coder)
 		return (false);
 	if (!coders_share_dongle(my_request->coder, other_request->coder))
 		return (false);
-	if (request_has_priority(other_request, my_request, scheduler))
-		return (true);
-	return (false);
+	if (!request_has_priority(other_request, my_request, scheduler))
+		return (false);
+	get_coder_dongles_wait_info(
+		other_request->coder,
+		&has_busy_dongle,
+		&available_at
+		);
+	if (has_busy_dongle)
+		return (false);
+	if (available_at > current_time)
+		return (false);
+	return (true);
 }
 
 bool	request_has_dongle_priority(
@@ -65,9 +77,13 @@ bool	request_has_dongle_priority(
 	int			i;
 	t_request	*my_request;
 	t_request	*other_request;
+	long		current_time;
 
 	my_request = find_coder_request(queue, coder);
 	if (my_request == NULL)
+		return (false);
+	current_time = get_time_ms();
+	if (current_time == -1)
 		return (false);
 	i = 0;
 	while (i < queue->size)
@@ -76,7 +92,8 @@ bool	request_has_dongle_priority(
 		if (other_request_has_priority(
 				my_request,
 				other_request,
-				scheduler
+				scheduler,
+				current_time
 			))
 			return (false);
 		i++;
