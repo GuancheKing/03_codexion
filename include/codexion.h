@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/13 15:58:08 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 18:39:11 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ void	get_coder_dongles_wait_info(
 			long *available_at
 			);
 int		stop_dongle_wait(t_simulation *simulation);
-bool	coder_is_queue_head(t_request_queue *queue, t_coder *coder);
 int		log_state(t_coder *coder, t_log_state state);
 void	init_default_values(t_simulation *simulation);
 int		init_resources(t_simulation *simulation);
