@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:31:49 by josjimen          #+#    #+#             */
-/*   Updated: 2026/07/23 13:57:54 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 17:45:25 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ int	wait_ms(t_simulation *simulation, long duration)
 			return (0);
 		usleep(1000);
 	}
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 22:59:53 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/04 08:33:25 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 18:31:33 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static int	finish_compilation(t_coder *coder)
 	release_time = get_time_ms();
 	if (release_time == -1)
 		return (cancel_dongle_and_finish_sim(coder));
-	increment_completed_compiles(coder);
 	release_dongles(coder, release_time);
+	increment_completed_compiles(coder);
 	return (0);
 }
 
