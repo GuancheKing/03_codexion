@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/13 07:46:38 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/13 09:03:39 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 21:57:18 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	wait_for_queue_or_cooldown(t_coder *coder)
 			&timeout));
 }
 
-static int	process_head_result(
+static int	process_claim_result(
 	t_simulation	*simulation,
 	t_claim_result	result
 )
@@ -89,11 +89,15 @@ int	handle_request_turn(t_coder *coder, int *wait_result)
 {
 	t_simulation	*simulation;
 	t_claim_result	result;
+	t_priority		priority_result;
 	int				action;
 
 	simulation = coder->simulation;
-	if (!request_has_dongle_priority(&simulation->queue, coder,
-			simulation->config.scheduler))
+	priority_result = request_has_dongle_priority(&simulation->queue, coder,
+			simulation->config.scheduler);
+	if (priority_result == PRIORITY_ERROR)
+		return (stop_dongle_wait(simulation));
+	if (priority_result == PRIORITY_WAIT)
 	{
 		*wait_result = pthread_cond_wait(
 				&simulation->queue.queue_cond,
@@ -101,6 +105,6 @@ int	handle_request_turn(t_coder *coder, int *wait_result)
 		return (-1);
 	}
 	result = handle_request_claim(coder, wait_result);
-	action = process_head_result(simulation, result);
+	action = process_claim_result(simulation, result);
 	return (action);
 }

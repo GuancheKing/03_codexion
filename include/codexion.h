@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:45:00 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/13 18:39:11 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 22:01:33 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ typedef enum e_claim_result
 	CLAIM_WAIT,
 	CLAIM_SUCCESS
 }	t_claim_result;
+
+typedef enum e_priority_result
+{
+	PRIORITY_ERROR,
+	PRIORITY_WAIT,
+	PRIORITY_SUCCESS
+}	t_priority;
 
 typedef enum e_log_state
 {
@@ -109,71 +116,74 @@ struct s_simulation
 	bool			monitor_created;
 };
 
-int		parser(int argc, char **argv, t_config *config);
-long	get_time_ms(void);
-int		init_simulation(int argc, char **argv, t_simulation *simulation);
-void	destroy_simulation(t_simulation *simulation);
-void	*coder_routine(void *arg);
-int		start_threads(t_simulation *simulation);
-int		join_threads(t_simulation *simulation);
-int		start_simulation(t_simulation *simulation);
-void	cancel_start(t_simulation *simulation);
-bool	is_simulation_finished(t_simulation *simulation);
-void	set_simulation_finished(t_simulation *simulation);
-int		wait_ms(t_simulation *simulation, long duration);
-int		init_dongles(t_simulation *simulation);
-void	assign_dongles(t_simulation *simulation);
-bool	request_has_priority(t_request *a, t_request *b, t_scheduler scheduler);
-int		init_request_queue(t_simulation *simulation);
-void	swap_requests(t_request *a, t_request *b);
-int		parent_index(int i);
-int		left_child_index(int i);
-int		right_child_index(int i);
-int		push_request(
-			t_request_queue *queue,
-			t_request request,
-			t_scheduler scheduler
-			);
-int		pop_request(
-			t_request_queue *queue,
-			t_request *result,
-			t_scheduler scheduler
-			);
-int		enqueue_coder_request(t_coder *coder);
-bool	try_reserve_dongles(t_coder *coder, long current_time);
-void	release_dongles(t_coder *coder, long release_time);
-int		wait_for_dongles(t_coder *coder);
-void	cancel_dongle_reservation(t_coder *coder);
-void	get_coder_dongles_wait_info(
-			t_coder *coder,
-			bool *has_busy_dongle,
-			long *available_at
-			);
-int		stop_dongle_wait(t_simulation *simulation);
-int		log_state(t_coder *coder, t_log_state state);
-void	init_default_values(t_simulation *simulation);
-int		init_resources(t_simulation *simulation);
-void	set_last_compile_time(t_coder *coder, long compile_time);
-void	increment_completed_compiles(t_coder *coder);
-int		get_completed_compiles(t_coder *coder);
-long	get_last_compile_time(t_coder *coder);
-bool	has_completed_required_compiles(t_coder *coder);
-int		run_coder_cycle(t_coder *coder);
-void	*coder_routine(void *arg);
-bool	has_any_coder_burned_out(t_simulation *simulation, long current_time);
-bool	have_all_coders_completed(t_simulation *simulation);
-void	*monitor_routine(void *arg);
-bool	request_has_dongle_priority(
-			t_request_queue *queue,
-			t_coder *coder,
-			t_scheduler scheduler
-			);
-int		remove_coder_request(
-			t_request_queue *queue,
-			t_coder *coder,
-			t_scheduler scheduler
-			);
-int		find_coder_request_index(t_request_queue *queue, t_coder *coder);
-int		handle_request_turn(t_coder *coder, int *wait_result);
+int			parser(int argc, char **argv, t_config *config);
+long		get_time_ms(void);
+int			init_simulation(int argc, char **argv, t_simulation *simulation);
+void		destroy_simulation(t_simulation *simulation);
+void		*coder_routine(void *arg);
+int			start_threads(t_simulation *simulation);
+int			join_threads(t_simulation *simulation);
+int			start_simulation(t_simulation *simulation);
+void		cancel_start(t_simulation *simulation);
+bool		is_simulation_finished(t_simulation *simulation);
+void		set_simulation_finished(t_simulation *simulation);
+int			wait_ms(t_simulation *simulation, long duration);
+int			init_dongles(t_simulation *simulation);
+void		assign_dongles(t_simulation *simulation);
+bool		request_has_priority(
+				t_request *a, t_request *b, t_scheduler scheduler
+				);
+int			init_request_queue(t_simulation *simulation);
+void		swap_requests(t_request *a, t_request *b);
+int			parent_index(int i);
+int			left_child_index(int i);
+int			right_child_index(int i);
+int			push_request(
+				t_request_queue *queue,
+				t_request request,
+				t_scheduler scheduler
+				);
+int			pop_request(
+				t_request_queue *queue,
+				t_request *result,
+				t_scheduler scheduler
+				);
+int			enqueue_coder_request(t_coder *coder);
+bool		try_reserve_dongles(t_coder *coder, long current_time);
+void		release_dongles(t_coder *coder, long release_time);
+int			wait_for_dongles(t_coder *coder);
+void		cancel_dongle_reservation(t_coder *coder);
+void		get_coder_dongles_wait_info(
+				t_coder *coder,
+				bool *has_busy_dongle,
+				long *available_at
+				);
+int			stop_dongle_wait(t_simulation *simulation);
+int			log_state(t_coder *coder, t_log_state state);
+void		init_default_values(t_simulation *simulation);
+int			init_resources(t_simulation *simulation);
+void		set_last_compile_time(t_coder *coder, long compile_time);
+void		increment_completed_compiles(t_coder *coder);
+int			get_completed_compiles(t_coder *coder);
+long		get_last_compile_time(t_coder *coder);
+bool		has_completed_required_compiles(t_coder *coder);
+int			run_coder_cycle(t_coder *coder);
+void		*coder_routine(void *arg);
+bool		has_any_coder_burned_out(
+				t_simulation *simulation, long current_time);
+bool		have_all_coders_completed(t_simulation *simulation);
+void		*monitor_routine(void *arg);
+t_priority	request_has_dongle_priority(
+				t_request_queue *queue,
+				t_coder *coder,
+				t_scheduler scheduler
+				);
+int			remove_coder_request(
+				t_request_queue *queue,
+				t_coder *coder,
+				t_scheduler scheduler
+				);
+int			find_coder_request_index(t_request_queue *queue, t_coder *coder);
+int			handle_request_turn(t_coder *coder, int *wait_result);
 
 #endif

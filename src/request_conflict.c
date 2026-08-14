@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 07:15:13 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/13 15:10:23 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/13 21:45:27 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static bool	other_request_has_priority(
 	return (true);
 }
 
-bool	request_has_dongle_priority(
+t_priority	request_has_dongle_priority(
 	t_request_queue *queue, t_coder *coder, t_scheduler scheduler
 )
 {
@@ -81,10 +81,10 @@ bool	request_has_dongle_priority(
 
 	my_request = find_coder_request(queue, coder);
 	if (my_request == NULL)
-		return (false);
+		return (PRIORITY_WAIT);
 	current_time = get_time_ms();
 	if (current_time == -1)
-		return (false);
+		return (PRIORITY_ERROR);
 	i = 0;
 	while (i < queue->size)
 	{
@@ -95,10 +95,10 @@ bool	request_has_dongle_priority(
 				scheduler,
 				current_time
 			))
-			return (false);
+			return (PRIORITY_WAIT);
 		i++;
 	}
-	return (true);
+	return (PRIORITY_SUCCESS);
 }
 
 int	find_coder_request_index(t_request_queue *queue, t_coder *coder)

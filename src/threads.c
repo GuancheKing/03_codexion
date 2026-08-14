@@ -26,7 +26,8 @@ int	start_threads(t_simulation *simulation)
 		i++;
 	}
 	if (pthread_create(&simulation->monitor, NULL,
-		monitor_routine, simulation) != 0)
+			monitor_routine, simulation) != 0
+	)
 		return (1);
 	simulation->monitor_created = true;
 	return (0);
