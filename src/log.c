@@ -53,7 +53,7 @@ int	log_state(t_coder *coder, t_log_state state)
 	if (current_time == -1)
 		return (unlock_log_mutex(simulation, 1));
 	timestamp = current_time - simulation->simulation_start;
-	if (printf("%ld %d %s\n", timestamp, coder->id, message) == -1)
+	if (printf("%ld %d %s\n", timestamp, coder->id, message) < 0)
 		return (unlock_log_mutex(simulation, 1));
 	return (unlock_log_mutex(simulation, 0));
 }
