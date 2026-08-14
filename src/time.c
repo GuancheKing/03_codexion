@@ -6,7 +6,7 @@
 /*   By: josjimen <josjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 22:31:49 by josjimen          #+#    #+#             */
-/*   Updated: 2026/08/13 17:45:25 by josjimen         ###   ########.fr       */
+/*   Updated: 2026/08/14 16:31:33 by josjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ long	safe_time_add(long base, long duration)
 {
 	if (base > LONG_MAX - duration)
 		return (LONG_MAX);
-	return(base + duration);
+	return (base + duration);
 }
