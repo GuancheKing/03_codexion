@@ -116,11 +116,38 @@ Communication between coder threads and the monitor is performed through shared 
 
 The project was tested with different coder counts, FIFO and EDF scheduling, cooldown values and burnout scenarios.
 
-Memory and thread synchronization were also checked using:
+Some useful test cases:
+
+### Normal execution
 
 ```bash
-valgrind --leak-check=full --show-leak-kinds=all ./codexion ...
-valgrind --tool=helgrind ./codexion ...
+./codexion 5 5000 200 100 100 2 20 fifo
+```
+
+### EDF scheduler
+
+```bash
+./codexion 5 5000 200 100 100 2 20 edf
+```
+
+### Burnout handling
+
+```bash
+./codexion 3 450 300 100 100 2 0 fifo
+```
+
+### Dongle cooldown
+
+```bash
+./codexion 4 5000 200 100 100 2 200 fifo
+```
+
+### Memory and thread synchronization checks:
+
+```bash
+valgrind --leak-check=full --show-leak-kinds=all ./codexion 5 5000 200 100 100 2 20 fifo
+
+valgrind --tool=helgrind ./codexion 5 5000 200 100 100 2 20 fifo
 ```
 
 The tested executions reported no memory leaks and no synchronization errors.
