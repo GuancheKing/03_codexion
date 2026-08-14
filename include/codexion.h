@@ -143,11 +143,6 @@ int			push_request(
 				t_request request,
 				t_scheduler scheduler
 				);
-int			pop_request(
-				t_request_queue *queue,
-				t_request *result,
-				t_scheduler scheduler
-				);
 int			enqueue_coder_request(t_coder *coder);
 bool		try_reserve_dongles(t_coder *coder, long current_time);
 void		release_dongles(t_coder *coder, long release_time);

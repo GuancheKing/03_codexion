@@ -81,24 +81,6 @@ int	push_request(
 	return (0);
 }
 
-int	pop_request(
-	t_request_queue *queue,
-	t_request *result,
-	t_scheduler scheduler
-)
-{
-	if (queue->size == 0)
-		return (1);
-	*result = queue->items[0];
-	queue->size--;
-	if (queue->size > 0)
-	{
-		queue->items[0] = queue->items[queue->size];
-		heapify_down(queue, 0, scheduler);
-	}
-	return (0);
-}
-
 int	remove_coder_request(
 	t_request_queue *queue, t_coder *coder, t_scheduler scheduler
 )
