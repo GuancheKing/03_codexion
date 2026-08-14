@@ -180,5 +180,6 @@ int			remove_coder_request(
 				);
 int			find_coder_request_index(t_request_queue *queue, t_coder *coder);
 int			handle_request_turn(t_coder *coder, int *wait_result);
+long		safe_time_add(long base, long duration);
 
 #endif

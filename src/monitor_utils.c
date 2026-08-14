@@ -42,7 +42,9 @@ static bool	check_coder_burnout(
 		>= simulation->config.number_of_compiles_required
 	)
 		return (false);
-	deadline = last_compile_time + simulation->config.time_to_burnout;
+	deadline = safe_time_add(
+			last_compile_time, simulation->config.time_to_burnout
+			);
 	if (current_time >= deadline)
 	{
 		set_simulation_finished(simulation);

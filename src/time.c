@@ -14,6 +14,7 @@
 #include <sys/time.h>
 #include <stddef.h>
 #include <unistd.h>
+#include <limits.h>
 
 long	get_time_ms(void)
 {
@@ -52,4 +53,11 @@ int	wait_ms(t_simulation *simulation, long duration)
 		usleep(1000);
 	}
 	return (1);
+}
+
+long	safe_time_add(long base, long duration)
+{
+	if (base > LONG_MAX - duration)
+		return (LONG_MAX);
+	return(base + duration);
 }

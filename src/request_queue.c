@@ -21,8 +21,9 @@ int	enqueue_coder_request(t_coder *coder)
 	pthread_mutex_lock(&simulation->queue.queue_mutex);
 	request.coder = coder;
 	request.arrival_order = simulation->queue.next_arrival_order;
-	request.deadline
-		= get_last_compile_time(coder) + simulation->config.time_to_burnout;
+	request.deadline = safe_time_add(
+			get_last_compile_time(coder), simulation->config.time_to_burnout
+			);
 	if (push_request(
 			&simulation->queue,
 			request,

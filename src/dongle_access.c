@@ -76,8 +76,8 @@ void	release_dongles(t_coder *coder, long release_time)
 	pthread_mutex_lock(&second->dongle_mutex);
 	first->in_use = false;
 	second->in_use = false;
-	first->available_at = release_time + cooldown;
-	second->available_at = release_time + cooldown;
+	first->available_at = safe_time_add(release_time, cooldown);
+	second->available_at = safe_time_add(release_time, cooldown);
 	pthread_mutex_unlock(&second->dongle_mutex);
 	pthread_mutex_unlock(&first->dongle_mutex);
 	pthread_cond_broadcast(&coder->simulation->queue.queue_cond);
